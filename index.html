@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="sepia">
+<html lang="en" data-theme="minimal">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,6 +134,47 @@
   --scrollbar-thumb: rgba(251,146,60,0.25);
 }
 
+/* — MINIMAL (Professional White) — */
+[data-theme="minimal"] {
+  --bg:            #ffffff;
+  --bg2:           #fafafa;
+  --bg3:           #f4f4f5;
+  --panel:         rgba(255,255,255,0.78);
+  --panel-solid:   #ffffff;
+  --border:        rgba(15,23,42,0.08);
+  --border-accent: rgba(37,99,235,0.25);
+
+  --acc:           #2563eb;
+  --acc-dim:       rgba(37,99,235,0.07);
+  --acc-border:    rgba(37,99,235,0.22);
+
+  --sec:           #7c3aed;
+  --sec-dim:       rgba(124,58,237,0.07);
+
+  --pos:           #16a34a;
+  --pos-dim:       rgba(22,163,74,0.08);
+
+  --warn:          #b45309;
+
+  --text:          #18181b;
+  --text2:         #52525b;
+  --text3:         #a1a1aa;
+
+  --nav-bg:        rgba(255,255,255,0.85);
+  --nav-border:    rgba(15,23,42,0.06);
+  --grid-line:     rgba(15,23,42,0.022);
+
+  --btn-primary-text: #ffffff;
+  --timeline-fade: rgba(37,99,235,0.08);
+
+  --tag-a-text:    #2563eb; --tag-a-bg: rgba(37,99,235,0.06);  --tag-a-bd: rgba(37,99,235,0.18);
+  --tag-b-text:    #7c3aed; --tag-b-bg: rgba(124,58,237,0.06); --tag-b-bd: rgba(124,58,237,0.18);
+  --tag-c-text:    #15803d; --tag-c-bg: rgba(21,128,61,0.06);  --tag-c-bd: rgba(21,128,61,0.18);
+  --tag-d-text:    #b45309; --tag-d-bg: rgba(180,83,9,0.06);   --tag-d-bd: rgba(180,83,9,0.18);
+
+  --scrollbar-thumb: rgba(37,99,235,0.2);
+}
+
 /* ════════════════════════════════════════════
    RESET & BASE
 ════════════════════════════════════════════ */
@@ -191,8 +232,26 @@ nav {
 .nav-links a {
   font-size: 12px; font-family: var(--mono); color: var(--text2);
   text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s;
+  position: relative;
+  padding-bottom: 2px;
 }
 .nav-links a:hover { color: var(--acc); }
+.nav-links a::after {
+  content: '';
+  position: absolute; left: 0; bottom: -7px;
+  width: 100%; height: 2px;
+  background: var(--acc);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+  transform-origin: left;
+}
+.nav-links a.active {
+  color: var(--acc);
+}
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
 
 .nav-right { display: flex; align-items: center; gap: 0.75rem; }
 
@@ -215,6 +274,8 @@ nav {
 .theme-btn[data-t="light"] { background: linear-gradient(135deg, #fdf6f0, #fb923c); }
 .theme-btn[data-t="sepia"] { background: #261c12; border-color: rgba(251,146,60,0.5); }
 .theme-btn[data-t="sepia"].active { border-color: #fb923c; }
+.theme-btn[data-t="minimal"] { background: linear-gradient(135deg, #ffffff, #cbd5e1); border: 1px solid rgba(15,23,42,0.15); }
+.theme-btn[data-t="minimal"].active { border-color: #2563eb; }
 
 .nav-cta {
   font-family: var(--mono); font-size: 12px; color: var(--acc);
@@ -570,50 +631,99 @@ footer {
 
 .tp-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; color: #4a5568;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  margin-bottom: 0.85rem;
+  font-size: 11px; color: #fb923c;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
 }
+.tp-sublabel {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; color: #c8d3e0;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+.tp-sublabel .tp-hint { color: #6b7785; font-size: 11.5px; }
 
 .tp-cards {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
   margin-bottom: 1.25rem;
 }
 
 .tp-card {
-  border-radius: 10px;
+  position: relative;
+  border-radius: 12px;
   border: 2px solid rgba(255,255,255,0.08);
-  padding: 14px 12px 12px;
+  padding: 12px;
   cursor: pointer;
-  transition: border-color 0.2s, transform 0.15s;
+  transition: border-color 0.2s, transform 0.15s, background 0.2s;
   background: #181818;
-  display: flex; flex-direction: column; gap: 6px;
+  display: flex; flex-direction: column; gap: 8px;
 }
-.tp-card:hover { transform: translateY(-2px); }
-.tp-card.selected { border-color: #fb923c; }
+.tp-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.2); }
+.tp-card.selected { border-color: #fb923c; background: #1f1812; }
 
-.tp-swatch {
-  width: 100%; height: 36px; border-radius: 6px;
-  margin-bottom: 4px;
+.tp-badge {
+  position: absolute; top: -9px; right: 10px;
+  background: #fb923c; color: #0a0a0a;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 2.5px 8px; border-radius: 100px;
 }
-.tp-swatch.dark  { background: linear-gradient(135deg, #050a0e 40%, #00e5ff 200%); border: 1px solid rgba(0,229,255,0.2); }
-.tp-swatch.light { background: linear-gradient(135deg, #fdf6f0, #ea580c); }
-.tp-swatch.sepia { background: linear-gradient(135deg, #16100a 40%, #fb923c 200%); border: 1px solid rgba(251,146,60,0.25); }
 
+/* mini page preview */
+.tp-preview {
+  height: 64px;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 5px;
+  background: var(--p-bg);
+  border: 1px solid var(--p-border);
+}
+.tpv-nav { display: flex; align-items: center; gap: 4px; }
+.tpv-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--p-acc); }
+.tpv-bar { height: 6px; width: 34%; border-radius: 3px; background: var(--p-acc); }
+.tpv-line { height: 4px; border-radius: 3px; background: var(--p-text2); opacity: 0.55; }
+.tpv-line.w1 { width: 78%; }
+.tpv-line.w2 { width: 52%; }
+.tpv-btn { margin-top: auto; width: 40%; height: 9px; border-radius: 4px; background: var(--p-acc); }
+
+.tp-preview.dark    { --p-bg:#0a1118; --p-acc:#00e5ff; --p-text2:#7a8fa8; --p-border: rgba(0,229,255,0.18); }
+.tp-preview.light   { --p-bg:#fdf6f0; --p-acc:#ea580c; --p-text2:#b07040; --p-border: rgba(234,88,12,0.18); }
+.tp-preview.sepia   { --p-bg:#1c140c; --p-acc:#fb923c; --p-text2:#c49a6c; --p-border: rgba(251,146,60,0.18); }
+.tp-preview.minimal { --p-bg:#ffffff; --p-acc:#2563eb; --p-text2:#a1a1aa; --p-border: rgba(0,0,0,0.10); }
+
+/* info row below preview */
+.tp-info { display: flex; align-items: center; gap: 8px; }
+.tp-emoji { font-size: 18px; line-height: 1; flex-shrink: 0; }
+.tp-text-col { flex: 1; min-width: 0; }
 .tp-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; font-weight: 600; color: #c8d3e0;
-  letter-spacing: 0.04em;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12.5px; font-weight: 600; color: #e8edf3;
+  letter-spacing: 0.01em;
 }
-.tp-desc { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #4a5568; }
+.tp-desc {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10.5px; color: #6b7785;
+  margin-top: 1px;
+}
+.tp-check {
+  width: 19px; height: 19px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: transparent;
+  flex-shrink: 0; transition: all 0.2s;
+}
+.tp-card.selected .tp-check {
+  border-color: #fb923c; background: #fb923c; color: #0a0a0a;
+}
 
 .tp-confirm {
-  width: 100%; padding: 11px;
+  width: 100%; padding: 13px;
   background: #fb923c; color: #0a0a0a;
   border: none; border-radius: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.04em;
   cursor: pointer; transition: opacity 0.2s, transform 0.15s;
 }
 .tp-confirm:hover { opacity: 0.88; transform: translateY(-1px); }
@@ -634,15 +744,189 @@ footer {
 /* ════════════════════════════════════════════
    MOBILE
 ════════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   BACK TO TOP
+════════════════════════════════════════════ */
+#back-to-top {
+  position: fixed;
+  bottom: 28px; right: 24px;
+  z-index: 7500;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--panel);
+  border: 1px solid var(--acc-border);
+  backdrop-filter: blur(14px);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 11px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  opacity: 0;
+  transform: translateY(14px) scale(0.92);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s, background 0.35s;
+}
+#back-to-top.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+#back-to-top:hover {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+#back-to-top .btt-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+}
+#back-to-top .btt-icon svg { width: 100%; height: 100%; }
+
+/* ════════════════════════════════════════════
+   FLOATING HAMBURGER (mobile only)
+════════════════════════════════════════════ */
+
+/* FAB button */
+#mob-fab {
+  display: none;
+  position: fixed;
+  bottom: 28px; right: 24px;
+  z-index: 8000;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--acc);
+  border: none; cursor: pointer;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 5px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+#mob-fab:hover { transform: scale(1.07); }
+#mob-fab.open { background: var(--bg3); border: 1px solid var(--acc-border); }
+
+.fab-bar {
+  width: 22px; height: 2px;
+  background: var(--btn-primary-text);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.2s, width 0.2s;
+  transform-origin: center;
+}
+#mob-fab.open .fab-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#mob-fab.open .fab-bar:nth-child(2) { opacity: 0; width: 0; }
+#mob-fab.open .fab-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+#mob-fab .fab-bar { background: var(--btn-primary-text); }
+#mob-fab.open .fab-bar { background: var(--acc); }
+
+/* Drawer panel */
+#mob-drawer {
+  display: none;
+  position: fixed;
+  bottom: 92px; right: 24px;
+  z-index: 7999;
+  width: 220px;
+  background: var(--panel);
+  border: 1px solid var(--acc-border);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  transform: scale(0.88) translateY(16px);
+  transform-origin: bottom right;
+  opacity: 0;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+  pointer-events: none;
+}
+#mob-drawer.open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mob-nav-links { list-style: none; padding: 8px 0; }
+.mob-nav-links li a {
+  display: block;
+  font-family: var(--mono); font-size: 13px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text2); text-decoration: none;
+  padding: 11px 20px;
+  transition: background 0.15s, color 0.15s;
+}
+.mob-nav-links li a:hover { background: var(--acc-dim); color: var(--acc); }
+.mob-nav-links li a.active {
+  background: var(--acc-dim); color: var(--acc);
+  border-left: 2px solid var(--acc);
+  padding-left: 18px;
+}
+
+.mob-drawer-divider {
+  height: 1px; background: var(--border);
+  margin: 4px 16px;
+}
+
+/* theme row inside drawer */
+.mob-theme-row {
+  display: flex; align-items: center;
+  gap: 8px; padding: 10px 20px 14px;
+}
+.mob-theme-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text3); letter-spacing: 0.1em;
+  text-transform: uppercase; flex: 1;
+}
+
+/* hire me CTA row */
+.mob-cta {
+  display: block;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--btn-primary-text);
+  background: var(--acc);
+  text-decoration: none;
+  text-align: center;
+  padding: 11px 20px;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+.mob-cta:hover { opacity: 0.88; }
+
+/* overlay tap-to-close */
+#mob-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  z-index: 7998;
+  background: transparent;
+}
+
 @media (max-width: 768px) {
   nav { padding: 0 1.25rem; }
   .nav-links { display: none; }
+  .nav-right .nav-cta { display: none; }
+  .nav-right .theme-switcher { display: none; }
   .hero-inner { grid-template-columns: 1fr; }
   .hero-stats { display: none; }
   .projects-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .container { padding: 0 1.25rem; }
   #hero { padding: 5rem 1.25rem 3rem; }
+
+  #mob-fab    { display: flex; }
+  #mob-drawer { display: block; }
+  #mob-overlay { display: block; pointer-events: none; }
+
+  /* Back to top: icon-only, bottom-left so it never collides with the hamburger FAB */
+  #back-to-top {
+    left: 24px; right: auto;
+    bottom: 28px;
+    width: 48px; height: 48px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 14px;
+  }
+  #back-to-top .btt-label { display: none; }
+  #back-to-top .btt-icon { width: 18px; height: 18px; }
 }
 </style>
 </head>
@@ -661,25 +945,81 @@ footer {
       <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd" id="t-cmd1"></span></div>
     </div>
     <div class="theme-picker" id="theme-picker">
-      <div class="tp-label">// select_theme --apply</div>
+      <div class="tp-label">$ choose-theme --interactive</div>
+      <div class="tp-sublabel">
+        Pick how the page looks 🎨 <span class="tp-hint">— you can change this anytime from the menu</span>
+      </div>
       <div class="tp-cards">
+        <div class="tp-card selected" data-t="minimal">
+          <span class="tp-badge">Recommended</span>
+          <div class="tp-preview minimal">
+            <div class="tpv-nav"><span class="tpv-dot"></span><span class="tpv-bar"></span></div>
+            <div class="tpv-line w1"></div>
+            <div class="tpv-line w2"></div>
+            <div class="tpv-btn"></div>
+          </div>
+          <div class="tp-info">
+            <span class="tp-emoji">☀️</span>
+            <div class="tp-text-col">
+              <div class="tp-name">Clean & Professional</div>
+              <div class="tp-desc">Crisp white, easy to read</div>
+            </div>
+            <div class="tp-check">✓</div>
+          </div>
+        </div>
+
         <div class="tp-card" data-t="dark">
-          <div class="tp-swatch dark"></div>
-          <div class="tp-name">Neon Dark</div>
-          <div class="tp-desc">Cyan on deep navy</div>
+          <div class="tp-preview dark">
+            <div class="tpv-nav"><span class="tpv-dot"></span><span class="tpv-bar"></span></div>
+            <div class="tpv-line w1"></div>
+            <div class="tpv-line w2"></div>
+            <div class="tpv-btn"></div>
+          </div>
+          <div class="tp-info">
+            <span class="tp-emoji">🌙</span>
+            <div class="tp-text-col">
+              <div class="tp-name">Neon Dark</div>
+              <div class="tp-desc">Bold, futuristic, cyan glow</div>
+            </div>
+            <div class="tp-check">✓</div>
+          </div>
         </div>
+
         <div class="tp-card" data-t="light">
-          <div class="tp-swatch light"></div>
-          <div class="tp-name">Light Orange</div>
-          <div class="tp-desc">Warm cream + burnt orange</div>
+          <div class="tp-preview light">
+            <div class="tpv-nav"><span class="tpv-dot"></span><span class="tpv-bar"></span></div>
+            <div class="tpv-line w1"></div>
+            <div class="tpv-line w2"></div>
+            <div class="tpv-btn"></div>
+          </div>
+          <div class="tp-info">
+            <span class="tp-emoji">🍊</span>
+            <div class="tp-text-col">
+              <div class="tp-name">Sunset Orange</div>
+              <div class="tp-desc">Warm cream + citrus accent</div>
+            </div>
+            <div class="tp-check">✓</div>
+          </div>
         </div>
-        <div class="tp-card selected" data-t="sepia">
-          <div class="tp-swatch sepia"></div>
-          <div class="tp-name">Warm Sepia</div>
-          <div class="tp-desc">Amber dark · default</div>
+
+        <div class="tp-card" data-t="sepia">
+          <div class="tp-preview sepia">
+            <div class="tpv-nav"><span class="tpv-dot"></span><span class="tpv-bar"></span></div>
+            <div class="tpv-line w1"></div>
+            <div class="tpv-line w2"></div>
+            <div class="tpv-btn"></div>
+          </div>
+          <div class="tp-info">
+            <span class="tp-emoji">📜</span>
+            <div class="tp-text-col">
+              <div class="tp-name">Warm Sepia</div>
+              <div class="tp-desc">Cozy amber-on-dark</div>
+            </div>
+            <div class="tp-check">✓</div>
+          </div>
         </div>
       </div>
-      <button class="tp-confirm" id="tp-confirm">Boot portfolio →</button>
+      <button class="tp-confirm" id="tp-confirm">Continue to portfolio →</button>
     </div>
   </div>
 </div>
@@ -699,9 +1039,10 @@ footer {
   </ul>
   <div class="nav-right">
     <div class="theme-switcher" title="Switch theme">
+      <button class="theme-btn active" data-t="minimal" aria-label="Minimal light theme"></button>
       <button class="theme-btn"        data-t="dark"  aria-label="Dark theme"></button>
       <button class="theme-btn"        data-t="light" aria-label="Light orange theme"></button>
-      <button class="theme-btn active" data-t="sepia" aria-label="Warm sepia theme"></button>
+      <button class="theme-btn"        data-t="sepia" aria-label="Warm sepia theme"></button>
     </div>
     <a href="mailto:shalom.bnri777@gmail.com" class="nav-cta">Hire me →</a>
   </div>
@@ -723,9 +1064,9 @@ footer {
         serving <strong style="color:var(--text)">11M+ daily users</strong> globally.
       </p>
       <div class="hero-links">
-        <a href="mailto:shalom.bnri777@gmail.com" class="btn-primary">Get in touch</a>
+        <a href="#projects" class="btn-primary">View my work ↓</a>
+        <a href="mailto:shalom.bnri777@gmail.com" class="btn-ghost">Get in touch</a>
         <a href="https://github.com/BanriSh777" target="_blank" class="btn-ghost">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/shalom-raju-battu" target="_blank" class="btn-ghost">LinkedIn ↗</a>
       </div>
     </div>
 
@@ -1042,7 +1383,11 @@ footer {
         <div class="contact-card-label">GitHub</div>
         <div class="contact-card-value">github.com/BanriSh777</div>
       </a>
-      <div class="contact-card">
+      <a href="https://www.linkedin.com/in/shalom-raju-battu/" target="_blank" class="contact-card">
+        <div class="contact-card-label">LinkedIn</div>
+        <div class="contact-card-value">linkedin.com/in/shalom-raju-battu</div>
+      </a>
+      <div class="contact-card" style="grid-column: 1 / -1;">
         <div class="contact-card-label">Location</div>
         <div class="contact-card-value neutral">Hyderabad / Bengaluru, India</div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--text3)">Open to Onsite · Hybrid · Remote</div>
@@ -1058,6 +1403,45 @@ footer {
   &nbsp;·&nbsp;
   <span style="color:var(--acc)">Available immediately</span>
 </footer>
+
+<!-- BACK TO TOP -->
+<a href="#hero" id="back-to-top" aria-label="Back to top">
+  <span class="btt-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+  </span>
+  <span class="btt-label">Back to top</span>
+</a>
+
+<!-- MOBILE FLOATING NAV -->
+<div id="mob-overlay"></div>
+
+<button id="mob-fab" aria-label="Open navigation menu">
+  <span class="fab-bar"></span>
+  <span class="fab-bar"></span>
+  <span class="fab-bar"></span>
+</button>
+
+<div id="mob-drawer">
+  <ul class="mob-nav-links">
+    <li><a href="#skills"       class="mob-link">01 · Skills</a></li>
+    <li><a href="#experience"   class="mob-link">02 · Experience</a></li>
+    <li><a href="#projects"     class="mob-link">03 · Projects</a></li>
+    <li><a href="#achievements" class="mob-link">04 · Impact</a></li>
+    <li><a href="#contact"      class="mob-link">05 · Contact</a></li>
+  </ul>
+  <div class="mob-drawer-divider"></div>
+  <div class="mob-theme-row">
+    <span class="mob-theme-label">Theme</span>
+    <div class="theme-switcher">
+      <button class="theme-btn active" data-t="minimal" aria-label="Minimal light theme"></button>
+      <button class="theme-btn"        data-t="dark"  aria-label="Dark theme"></button>
+      <button class="theme-btn"        data-t="light" aria-label="Light orange theme"></button>
+      <button class="theme-btn"        data-t="sepia" aria-label="Warm sepia theme"></button>
+    </div>
+  </div>
+  <div class="mob-drawer-divider"></div>
+  <a href="mailto:shalom.bnri777@gmail.com" class="mob-cta">Hire me →</a>
+</div>
 
 <script>
   const html = document.documentElement;
@@ -1101,15 +1485,36 @@ footer {
   /* Skip splash if already visited */
   const visited = sessionStorage.getItem('srb-visited');
 
+  /* ── Mobile FAB hamburger ── */
+  const fab     = document.getElementById('mob-fab');
+  const drawer  = document.getElementById('mob-drawer');
+  const overlay = document.getElementById('mob-overlay');
+
+  function toggleDrawer(force) {
+    const open = force !== undefined ? force : !drawer.classList.contains('open');
+    drawer.classList.toggle('open', open);
+    fab.classList.toggle('open', open);
+    overlay.style.pointerEvents = open ? 'all' : 'none';
+  }
+  fab.addEventListener('click', () => toggleDrawer());
+  overlay.addEventListener('click', () => toggleDrawer(false));
+  document.querySelectorAll('.mob-link').forEach(a => a.addEventListener('click', () => toggleDrawer(false)));
+
   if (visited) {
-    const saved = localStorage.getItem('srb-theme') || 'sepia';
+    const saved = localStorage.getItem('srb-theme') || 'minimal';
     setTheme(saved);
     splash.style.display = 'none';
     page.classList.add('reveal');
     bootScrollObserver();
   } else {
-    /* Pre-apply sepia so terminal looks themed */
-    setTheme(localStorage.getItem('srb-theme') || 'sepia');
+    /* Pre-apply default theme so terminal area looks consistent */
+    const initTheme = localStorage.getItem('srb-theme') || 'minimal';
+    setTheme(initTheme);
+
+    /* sync the picker card highlight to match */
+    document.querySelectorAll('.tp-card').forEach(c => {
+      c.classList.toggle('selected', c.dataset.t === initTheme);
+    });
 
     /* Line 1: command */
     typeInto(tCmd1El, 'node welcome.js --user=visitor', 38, () => {
@@ -1124,7 +1529,7 @@ footer {
         ['<span class="t-acc" style="font-size:15px;letter-spacing:0.04em">Hey 👋  Welcome to Shalom\'s Portfolio</span>', false],
         ['<span class="t-dim">// SDE II · Java · Spring Boot · Distributed Systems · 3 yrs exp</span>', false],
         ['', false],
-        ['<span class="t-prompt" style="color:#fb923c">?</span> <span style="color:#c8d3e0">Pick a theme to boot into:</span>', false],
+        ['<span class="t-prompt" style="color:#fb923c">?</span> <span style="color:#c8d3e0">Ready. Let\'s set things up —</span>', false],
       ];
 
       let delay = 0;
@@ -1140,7 +1545,7 @@ footer {
   }
 
   /* ── Theme card selection ── */
-  let chosenTheme = localStorage.getItem('srb-theme') || 'sepia';
+  let chosenTheme = localStorage.getItem('srb-theme') || 'minimal';
 
   document.querySelectorAll('.tp-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -1182,8 +1587,49 @@ footer {
         el.style.transitionDelay = (i * 60) + 'ms';
       });
     });
+
+    bootScrollSpy();
+    bootBackToTop();
+  }
+
+  /* ── Scroll-spy: highlight active nav section ── */
+  function bootScrollSpy() {
+    const navLinks = document.querySelectorAll('.nav-links a, .mob-link');
+    const sections = [...document.querySelectorAll('section[id]')].filter(sec =>
+      [...navLinks].some(a => a.getAttribute('href') === '#' + sec.id)
+    );
+
+    if (!sections.length) return;
+
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+    sections.forEach(sec => spy.observe(sec));
+  }
+
+  /* ── Back to top: show after scrolling past hero ── */
+  function bootBackToTop() {
+    const btt = document.getElementById('back-to-top');
+    const hero = document.getElementById('hero');
+
+    const onScroll = () => {
+      const past = window.scrollY > hero.offsetHeight * 0.8;
+      btt.classList.toggle('show', past);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 </script>
+
 </div><!-- /page-content -->
 </body>
 </html>
