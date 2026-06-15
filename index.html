@@ -557,6 +557,9 @@ footer {
   background: #0a0a0a;
   display: flex; align-items: center; justify-content: center;
   flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 #splash.hide {
@@ -765,23 +768,57 @@ footer {
 
 /* ── Mobile splash layout ── */
 @media (max-width: 768px) {
-  .terminal { width: min(440px, 94vw); }
+  /* Block layout avoids the flex-centering + overflow scroll bug
+     when content is taller than the viewport */
+  #splash {
+    display: block;
+    padding: 28px 16px;
+  }
+  .terminal {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+  }
   .terminal-bar, .terminal-body { display: none; }
-  .mobile-welcome { display: flex; }
+  .mobile-welcome {
+    display: flex;
+    padding: 1.5rem 1.5rem 0.25rem;
+    gap: 4px;
+  }
+  .mw-emoji { font-size: 2rem; margin-bottom: 0; }
+  .mw-title { font-size: 1.2rem; }
+  .mw-sub { font-size: 12.5px; }
+  .mw-hint { margin-top: 4px; }
   .tp-label { display: none; }
 
-  .tp-cards { grid-template-columns: 1fr; gap: 10px; }
+  .theme-picker { padding: 0 1.25rem 1.25rem; }
+  .tp-sublabel { font-size: 12px; margin-bottom: 0.85rem; }
+
+  .tp-cards { grid-template-columns: 1fr; gap: 8px; margin-bottom: 1rem; }
   .tp-card {
     flex-direction: row;
     align-items: center;
     gap: 12px;
-    padding: 10px 14px;
+    padding: 8px 12px;
   }
   .tp-preview {
-    width: 78px; height: 50px;
+    width: 70px; height: 44px;
     flex-shrink: 0;
+    gap: 3px;
   }
-  .tp-badge { left: 14px; right: auto; }
+  .tp-badge { left: 12px; right: auto; top: -8px; }
+  .tp-confirm { padding: 12px; }
+}
+
+/* Extra-narrow phones */
+@media (max-width: 380px) {
+  #splash { padding: 20px 10px; }
+  .theme-picker { padding: 0 0.85rem 1rem; }
+  .mobile-welcome { padding: 1.25rem 1rem 0.25rem; }
+  .tp-card { padding: 8px 10px; gap: 10px; }
+  .tp-preview { width: 60px; height: 40px; }
+  .tp-name { font-size: 12px; }
+  .tp-desc { font-size: 10px; }
 }
 
 /* ════════════════════════════════════════════
