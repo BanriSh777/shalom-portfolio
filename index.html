@@ -735,6 +735,55 @@ footer {
 }
 #page-content.reveal { opacity: 1; }
 
+/* ── Mobile-friendly welcome (replaces terminal animation) ── */
+.mobile-welcome {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 2rem 1.75rem 0.5rem;
+}
+.mw-emoji { font-size: 2.4rem; margin-bottom: 2px; }
+.mw-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.35rem; font-weight: 700; color: #f3f6fa;
+  letter-spacing: -0.01em;
+}
+.mw-sub {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; color: #9aa5b1; line-height: 1.55;
+  max-width: 280px;
+}
+.mw-sub strong { color: #fb923c; }
+.mw-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: #fb923c;
+  letter-spacing: 0.06em;
+  margin-top: 8px;
+}
+
+/* ── Mobile splash layout ── */
+@media (max-width: 768px) {
+  .terminal { width: min(440px, 94vw); }
+  .terminal-bar, .terminal-body { display: none; }
+  .mobile-welcome { display: flex; }
+  .tp-label { display: none; }
+
+  .tp-cards { grid-template-columns: 1fr; gap: 10px; }
+  .tp-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+  .tp-preview {
+    width: 78px; height: 50px;
+    flex-shrink: 0;
+  }
+  .tp-badge { left: 14px; right: auto; }
+}
+
 /* ════════════════════════════════════════════
    ANIMATIONS
 ════════════════════════════════════════════ */
@@ -943,6 +992,13 @@ footer {
     </div>
     <div class="terminal-body" id="t-body">
       <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd" id="t-cmd1"></span></div>
+    </div>
+
+    <div class="mobile-welcome">
+      <div class="mw-emoji">👋</div>
+      <h2 class="mw-title">Hey, welcome!</h2>
+      <p class="mw-sub">This is <strong>Shalom Battu's</strong> portfolio — SDE II · Java · Spring Boot · Distributed Systems.</p>
+      <p class="mw-hint">Pick a look to get started ↓</p>
     </div>
     <div class="theme-picker" id="theme-picker">
       <div class="tp-label">$ choose-theme --interactive</div>
@@ -1516,6 +1572,13 @@ footer {
       c.classList.toggle('selected', c.dataset.t === initTheme);
     });
 
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    if (isMobile) {
+      /* On mobile, skip the terminal animation — show the friendly
+         welcome card + theme picker directly */
+      setTimeout(() => picker.classList.add('show'), 350);
+    } else {
     /* Line 1: command */
     typeInto(tCmd1El, 'node welcome.js --user=visitor', 38, () => {
 
@@ -1542,6 +1605,7 @@ footer {
         picker.classList.add('show');
       }, delay + 100);
     });
+    }
   }
 
   /* ── Theme card selection ── */
